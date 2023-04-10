@@ -108,20 +108,22 @@ public class ArrayTasks {
      * arr = [[3, 1, 2,], [3,2]] -> [[2, 3], [1, 2, 3]] arr = [[5, 4], [7]]       -> [[7], [4, 5]]
      */
     public int[][] sortRaggedArray(int[][] arr) {
-        int[][] newArray = new int[arr.length][];
+        int[][] newArray = arr.clone();
 
-        for(int i=0; i< arr.length; i++) {
-            newArray[i] = arr[i];
-            for(int j=i+1; j<arr.length; j++) {
-                if(arr[j].length<arr[i].length)
-                    newArray[i] = arr[j];
+        for(int i=1; i< newArray.length; i++) {
+            int[] key = newArray[i];
+            int j= i-1;
+            while (j>=0 && key.length < newArray[j].length) {
+                newArray[j+1] = newArray[j];
+                j--;
             }
+            newArray[j + 1] = key;
 
-            for(int j=0; j< newArray[i].length; i++) {
-                for(int k=j+1; k< newArray[i].length; k++)
-                    if(newArray[i][k]<newArray[i][j]) {
-                        int temp = newArray[i][j];
-                        newArray[i][j] = newArray[i][k];
+            for(int l=0; l<newArray[i].length; l++) {
+                for(int k=l+1; k<newArray[i].length; k++)
+                    if(newArray[i][k]<newArray[i][l]) {
+                        int temp = newArray[i][l];
+                        newArray[i][l] = newArray[i][k];
                         newArray[i][k] = temp;
                     }
             }
